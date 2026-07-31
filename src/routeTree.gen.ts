@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChuongTrinhRouteImport } from './routes/chuong-trinh'
 import { Route as VeChungToiRouteImport } from './routes/ve-chung-toi'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChuongTrinhRoute = ChuongTrinhRouteImport.update({
+  id: '/chuong-trinh',
+  path: '/chuong-trinh',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VeChungToiRoute = VeChungToiRouteImport.update({
@@ -25,27 +31,31 @@ const VeChungToiRoute = VeChungToiRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chuong-trinh': typeof ChuongTrinhRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chuong-trinh': typeof ChuongTrinhRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chuong-trinh': typeof ChuongTrinhRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ve-chung-toi'
+  fullPaths: '/' | '/chuong-trinh' | '/ve-chung-toi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ve-chung-toi'
-  id: '__root__' | '/' | '/ve-chung-toi'
+  to: '/' | '/chuong-trinh' | '/ve-chung-toi'
+  id: '__root__' | '/' | '/chuong-trinh' | '/ve-chung-toi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChuongTrinhRoute: typeof ChuongTrinhRoute
   VeChungToiRoute: typeof VeChungToiRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chuong-trinh': {
+      id: '/chuong-trinh'
+      path: '/chuong-trinh'
+      fullPath: '/chuong-trinh'
+      preLoaderRoute: typeof ChuongTrinhRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ve-chung-toi': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChuongTrinhRoute: ChuongTrinhRoute,
   VeChungToiRoute: VeChungToiRoute,
 }
 export const routeTree = rootRouteImport
