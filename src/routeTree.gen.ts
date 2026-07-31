@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChuongTrinhRouteImport } from './routes/chuong-trinh'
+import { Route as KetQuaRouteImport } from './routes/ket-qua'
 import { Route as MentorsRouteImport } from './routes/mentors'
 import { Route as VeChungToiRouteImport } from './routes/ve-chung-toi'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const ChuongTrinhRoute = ChuongTrinhRouteImport.update({
   id: '/chuong-trinh',
   path: '/chuong-trinh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KetQuaRoute = KetQuaRouteImport.update({
+  id: '/ket-qua',
+  path: '/ket-qua',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentorsRoute = MentorsRouteImport.update({
@@ -38,12 +44,14 @@ const VeChungToiRoute = VeChungToiRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/ket-qua': typeof KetQuaRoute
   '/mentors': typeof MentorsRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/ket-qua': typeof KetQuaRoute
   '/mentors': typeof MentorsRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/ket-qua': typeof KetQuaRoute
   '/mentors': typeof MentorsRoute
   '/ve-chung-toi': typeof VeChungToiRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chuong-trinh' | '/mentors' | '/ve-chung-toi'
+  fullPaths: '/' | '/chuong-trinh' | '/ket-qua' | '/mentors' | '/ve-chung-toi'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chuong-trinh' | '/mentors' | '/ve-chung-toi'
-  id: '__root__' | '/' | '/chuong-trinh' | '/mentors' | '/ve-chung-toi'
+  to: '/' | '/chuong-trinh' | '/ket-qua' | '/mentors' | '/ve-chung-toi'
+  id:
+    | '__root__'
+    | '/'
+    | '/chuong-trinh'
+    | '/ket-qua'
+    | '/mentors'
+    | '/ve-chung-toi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChuongTrinhRoute: typeof ChuongTrinhRoute
+  KetQuaRoute: typeof KetQuaRoute
   MentorsRoute: typeof MentorsRoute
   VeChungToiRoute: typeof VeChungToiRoute
 }
@@ -83,6 +99,13 @@ declare module '@tanstack/react-router' {
       path: '/chuong-trinh'
       fullPath: '/chuong-trinh'
       preLoaderRoute: typeof ChuongTrinhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ket-qua': {
+      id: '/ket-qua'
+      path: '/ket-qua'
+      fullPath: '/ket-qua'
+      preLoaderRoute: typeof KetQuaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentors': {
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChuongTrinhRoute: ChuongTrinhRoute,
+  KetQuaRoute: KetQuaRoute,
   MentorsRoute: MentorsRoute,
   VeChungToiRoute: VeChungToiRoute,
 }
