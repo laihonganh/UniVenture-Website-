@@ -1,75 +1,132 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-ink text-ink-foreground">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2">
-          <p className="font-display text-xl font-bold">UniVenture</p>
-          <p className="mt-1 eyebrow text-accent">College Admissions Built on Action</p>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-muted">
-            Hệ sinh thái giáo dục đồng hành cùng học sinh Việt Nam trên hành trình vào đại học quốc
-            tế bằng những trải nghiệm được sống thật.
-          </p>
+    <footer className="bg-[#122554] text-white py-12 md:py-16 border-t-2 border-[#122554]">
+      <div className="mx-auto w-full max-w-7xl px-5 flex flex-col gap-10">
+
+        {/* Middle Navigation Columns */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-widest mb-4 border-b-2 border-[#ffcd6b] pb-2 text-[#ffcd6b]">
+              Về chúng tôi
+            </h4>
+            <ul className="space-y-3 text-sm text-white/90 font-medium">
+              <li>
+                <Link to="/ve-chung-toi" className="hover:text-[#ffcd6b] transition-colors">
+                  Sứ mệnh
+                </Link>
+              </li>
+              <li>
+                <Link to="/ve-chung-toi" className="hover:text-[#ffcd6b] transition-colors">
+                  Giá trị cốt lõi
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-widest mb-4 border-b-2 border-[#ffcd6b] pb-2 text-[#ffcd6b]">
+              Chương trình
+            </h4>
+            <ul className="space-y-3 text-sm text-white/90 font-medium">
+              <li>
+                <Link to="/chuong-trinh" className="hover:text-[#ffcd6b] transition-colors">
+                  Gói ĐHQT Việt Nam
+                </Link>
+              </li>
+              <li>
+                <Link to="/chuong-trinh" className="hover:text-[#ffcd6b] transition-colors">
+                  Gói Mentor Du học
+                </Link>
+              </li>
+              <li>
+                <Link to="/chuong-trinh" className="hover:text-[#ffcd6b] transition-colors">
+                  Gói Mentor HĐNK
+                </Link>
+              </li>
+              <li>
+                <Link to="/gia-su" className="hover:text-[#ffcd6b] transition-colors">
+                  Gia sư 1-1 Quốc tế
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-widest mb-4 border-b-2 border-[#ffcd6b] pb-2 text-[#ffcd6b]">
+              Khám phá
+            </h4>
+            <ul className="space-y-3 text-sm text-white/90 font-medium">
+              <li>
+                <Link to="/mentors" className="hover:text-[#ffcd6b] transition-colors">
+                  Mentors
+                </Link>
+              </li>
+              <li>
+                <Link to="/gia-su" className="hover:text-[#ffcd6b] transition-colors">
+                  Tìm gia sư
+                </Link>
+              </li>
+              <li>
+                <Link to="/ket-qua" className="hover:text-[#ffcd6b] transition-colors">
+                  Thành tích
+                </Link>
+              </li>
+              <li>
+                <Link to="/thu-vien" className="hover:text-[#ffcd6b] transition-colors">
+                  Thư viện
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-widest mb-4 border-b-2 border-[#ffcd6b] pb-2 text-[#ffcd6b]">
+              Liên hệ
+            </h4>
+            <ul className="space-y-3 text-sm text-white font-medium">
+              <li className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 text-[#ffcd6b] shrink-0" />
+                <a href="tel:0819113388" className="hover:text-[#ffcd6b] font-semibold transition-colors">
+                  081-911-3388
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 text-[#ffcd6b] shrink-0" />
+                <a
+                  href="mailto:univenture.contact@gmail.com"
+                  className="hover:text-[#ffcd6b] font-semibold transition-colors break-all"
+                >
+                  univenture.contact@gmail.com
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5 leading-snug">
+                <MapPin className="h-4 w-4 text-[#ffcd6b] shrink-0 mt-0.5" />
+                <span className="text-white/90">S2.07 Vinhomes Ocean Park, huyện Gia Lâm, TP.Hà Nội</span>
+              </li>
+              <li className="pt-1">
+                <Link
+                  to="/lien-he"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold bg-[#ffcd6b] text-[#122554] px-4 py-2 hover:bg-white transition-colors"
+                >
+                  Đặt lịch tư vấn <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <p className="eyebrow text-ink-muted">Khám phá</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
-            <li>
-              <Link to="/ve-chung-toi" className="hover:text-accent">
-                Về chúng tôi
-              </Link>
-            </li>
-            <li>
-              <Link to="/chuong-trinh" className="hover:text-accent">
-                Chương trình
-              </Link>
-            </li>
-            <li>
-              <Link to="/mentors" className="hover:text-accent">
-                Đội ngũ mentor
-              </Link>
-            </li>
-            <li>
-              <Link to="/ket-qua" className="hover:text-accent">
-                Kết quả trúng tuyển
-              </Link>
-            </li>
-          </ul>
+        {/* Footnote Logo (compact, max 1/4 viewport) */}
+        <div className="w-full flex justify-center items-center py-4 md:py-6 border-t border-white/20">
+          <img
+            src="/footnote.png"
+            alt="UniVenture"
+            className="w-auto max-w-full max-h-[18vh] md:max-h-[22vh] object-contain select-none opacity-90 hover:opacity-100 transition-opacity"
+          />
         </div>
 
-        <div>
-          <p className="eyebrow text-ink-muted">Liên hệ</p>
-          <ul className="mt-4 space-y-2.5 text-sm text-ink-muted">
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-accent" />
-              <a href="mailto:hello@univenture.vn" className="hover:text-accent">
-                hello@univenture.vn
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <Instagram className="h-4 w-4 text-accent" />
-              <span>@univenture.vn</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-accent" />
-              <span>Hà Nội, Việt Nam</span>
-            </li>
-          </ul>
-          <Link
-            to="/lien-he"
-            className="mt-5 inline-flex rounded-sm bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
-          >
-            Đặt lịch tư vấn
-          </Link>
-        </div>
-      </div>
-      <div className="border-t border-ink-muted/20">
-        <p className="mx-auto max-w-6xl px-5 py-5 text-xs text-ink-muted">
-          © {new Date().getFullYear()} UniVenture. Learn by doing.
-        </p>
       </div>
     </footer>
   );

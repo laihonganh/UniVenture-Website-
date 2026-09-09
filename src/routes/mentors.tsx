@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Award, Briefcase, School } from "lucide-react";
+import { ArrowRight, Award, Briefcase, School, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { getStoredMentors, MentorItem } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/mentors")({
   head: () => ({
@@ -21,146 +23,175 @@ export const Route = createFileRoute("/mentors")({
   component: MentorsPage,
 });
 
-const mentors = [
-  {
-    name: "Mentor Uyển Như",
-    role: "Giáo dục, Chính sách xã hội & Kinh tế · UK / US",
-    academics: [
-      "Top 1% International Linguistic Olympiad (IOL) Vietnam 2025",
-      "Huy chương Đồng International Economics Olympiad (IEO)",
-      "A Level: A*A*A*A*",
-      "Hơn 20+ giải thưởng nghiên cứu và khởi nghiệp quốc gia, quốc tế",
-    ],
-    leadership: [
-      "GreenerFuture Vietnam (Head Intern): dẫn dắt đội ngũ 11+ thực tập sinh, trực tiếp quản lý dự án hợp tác trị giá ~$760,000 với PUMA.",
-      "World Economic Forum – Global Shapers (Junior Curator): một trong những thành viên trung học trẻ nhất toàn cầu, Top 100 Global Shapers Innovation Prize.",
-      "DECA x Vinschool (Founder): thành lập chapter DECA đầu tiên tại trường, huấn luyện học sinh về kinh doanh và khởi nghiệp.",
-    ],
-    admits: [
-      "Top UK: LSE, UCL, University of Manchester, University of Bristol (Giáo dục & Chính sách xã hội)",
-      "DePauw University — 7,2 tỷ VNĐ",
-      "Mount Holyoke College — 7 tỷ VNĐ",
-      "Denison University — 6,7 tỷ VNĐ",
-      "St. Olaf College — Học bổng Tổng thống, 6,3 tỷ VNĐ",
-      "Union College — 5,7 tỷ VNĐ · Washington and Lee University",
-    ],
-  },
-  {
-    name: "Mentor Bảo Linh",
-    role: "Y khoa & Khoa học sức khỏe",
-    academics: [
-      "Học bổng 100% Cử nhân Y khoa (MD) tại VinUniversity",
-      "Huy chương Bạc International Medical & Biology Competition (IMBC)",
-      "Top 15 toàn cầu Inter Medical School Physiology Quiz (IMSPQ)",
-    ],
-    leadership: [
-      "MedMate (Co-Founder & Product Owner): đồng sáng lập startup HealthTech tại Việt Nam, ứng dụng AI/LLMs tối ưu hóa quy trình lâm sàng cho bác sĩ.",
-      "National Medical Academic Competition – NMAC (Founder): tiên phong tổ chức cuộc thi y khoa toàn quốc đầu tiên kết hợp lý thuyết và lâm sàng, thu hút hơn 20 trường đại học.",
-      "Student Academic Medical Organization – SAMO (Founder): xây dựng tổ chức hỗ trợ học thuật cho sinh viên Y khoa đầu tiên tại VinUniversity, phục vụ hơn 200 sinh viên.",
-    ],
-    admits: ["Học bổng 100% chương trình MD, VinUniversity"],
-  },
-  {
-    name: "Mentor Bảo Minh",
-    role: "Kinh doanh, Khởi nghiệp & STEM",
-    academics: [
-      "Học bổng 90% Cử nhân Quản trị kinh doanh tại VinUni",
-      "Quán quân SOICT Student Creative Ideas Challenge 2025",
-      "Quán quân GIC Startup Competition 2024",
-      "Top 10 Startup Wheel International 2025 — cuộc thi khởi nghiệp lớn nhất Đông Nam Á",
-    ],
-    leadership: [
-      "Electroverse (Co-Founder): tiên phong cung cấp giải pháp giáo dục STEM toàn diện, thiết lập quan hệ đối tác với hơn 30 trường học và đạt mốc doanh thu 1 tỷ VNĐ.",
-      "Project X Vietnam (Deputy Head of External Relations): kết nối hơn 40 đối tác công nghệ, tập đoàn lớn và mang về hơn 50 cơ hội thực tập cho học sinh, sinh viên.",
-    ],
-    admits: ["Học bổng 90% Quản trị kinh doanh, VinUniversity"],
-  },
-];
-
 function MentorsPage() {
+  const [mentorsList, setMentorsList] = useState<MentorItem[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeTab, setActiveTab] = useState<"academics" | "leadership" | "admits">("academics");
+
+  useEffect(() => {
+    setMentorsList(getStoredMentors());
+  }, []);
+
+  const goTo = (idx: number) => {
+    setCurrentSlide(idx);
+    setActiveTab("academics");
+  };
+
+  const prev = () => goTo(currentSlide === 0 ? mentorsList.length - 1 : currentSlide - 1);
+  const next = () => goTo(currentSlide === mentorsList.length - 1 ? 0 : currentSlide + 1);
+
+  const m = mentorsList[currentSlide] || mentorsList[0];
+  if (!m) return null;
+
   return (
     <>
-      <section className="bg-ink text-ink-foreground">
-        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
-          <p className="eyebrow text-accent">Meet the mentors</p>
-          <h1 className="mt-5 max-w-3xl text-4xl leading-[1.1] font-bold sm:text-5xl">
+      <section className="bg-[#122554] text-white border-b-2 border-[#122554] relative overflow-hidden">
+        {/* Decorative Stars */}
+        <img src="/icons-effect-art/star small yellow.png" alt="" className="absolute top-6 right-6 md:top-12 md:right-12 w-6 h-6 md:w-10 md:h-10 animate-rock pointer-events-none z-10" />
+        <img src="/icons-effect-art/star small while.png" alt="" className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-4 h-4 md:w-6 md:h-6 animate-rock pointer-events-none z-10" />
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24 relative z-10">
+          <p className="eyebrow text-[#ffcd6b]">Meet the mentors</p>
+          <h1 className="mt-5 max-w-3xl text-4xl leading-[1.1] font-bold sm:text-5xl lg:text-6xl">
             Người đã đi con đường em đang bước
           </h1>
-          <p className="mt-6 max-w-2xl leading-relaxed text-ink-muted">
-            Mentor của UniVenture không chỉ có hồ sơ học thuật xuất sắc — họ đã tự tay xây dự án,
-            khởi tạo startup và dẫn dắt tổ chức. Đó là lý do họ hướng dẫn học sinh bằng kinh nghiệm
-            thật, không phải lý thuyết.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white">
+            Mentor của UniVenture không chỉ có hồ sơ học thuật xuất sắc, họ đã tự tay xây dự án,
+            khởi tạo startup và dẫn dắt tổ chức. Đó là lý do họ hướng dẫn học sinh bằng <span className="highlight-yellow">kinh nghiệm thật</span>.
           </p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-14 px-5 py-16 lg:py-24">
-        {mentors.map((m) => (
-          <article key={m.name} className="rounded-sm border border-border bg-card p-7 lg:p-10">
-            <div className="border-b border-border pb-6">
-              <h2 className="font-display text-2xl font-bold text-primary sm:text-3xl">{m.name}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{m.role}</p>
+      {/* Mentor Carousel */}
+      <section className="bg-white relative overflow-hidden">
+        {/* Decorative Blue Star */}
+        <img src="/icons-effect-art/star small blue.svg" alt="" className="absolute top-6 right-6 md:top-10 md:right-10 w-5 h-5 md:w-8 md:h-8 animate-rock pointer-events-none z-10" />
+        <div className="mx-auto max-w-6xl px-4 sm:px-5 py-8 sm:py-14 lg:py-20">
+          <div className="mentor-carousel border-2 border-[#122554] overflow-hidden bg-white shadow-xl">
+
+            <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-0">
+              {/* Left: Mentor Photo + Name */}
+              <div className="flex flex-col items-center justify-center p-4 sm:p-6 lg:p-10 bg-[#ffffff] border-b-2 lg:border-b-0 lg:border-r-2 border-[#122554]">
+                <div className="relative w-full max-w-[150px] sm:max-w-[200px] lg:max-w-[240px] mb-3 lg:mb-6 flex items-center justify-center">
+                  <img
+                    src={m.image}
+                    alt={m.name}
+                    className="w-full h-[140px] sm:h-[200px] lg:h-[280px] object-contain"
+                  />
+                </div>
+                <h2 className="font-display text-lg sm:text-2xl lg:text-3xl font-bold text-[#122554] text-center mb-1">{m.name}</h2>
+                <p className="text-[11px] sm:text-sm lg:text-base font-semibold text-[#122554] uppercase tracking-wider mb-1 text-center">{m.role}</p>
+              </div>
+
+              {/* Right: Tab Content */}
+              <div className="flex flex-col">
+                {/* Tab buttons - Navy & White sleek styling */}
+                <div className="flex border-b-2 border-[#122554] bg-slate-50">
+                  {([
+                    { key: "academics" as const, label: "Học thuật", icon: Award },
+                    { key: "leadership" as const, label: "Kinh nghiệm", icon: Briefcase },
+                    { key: "admits" as const, label: "Trúng tuyển", icon: School },
+                  ]).map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key)}
+                      className={`flex-1 flex flex-col sm:flex-row items-center justify-center p-2.5 sm:p-3.5 lg:p-4 border-r-2 border-[#122554] last:border-r-0 text-xs sm:text-xs lg:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer gap-1 sm:gap-2 ${activeTab === tab.key
+                          ? "bg-[#122554] text-white"
+                          : "bg-white text-[#122554] hover:bg-slate-100"
+                        }`}
+                    >
+                      <tab.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                      <span className="text-[11px] sm:text-xs lg:text-sm whitespace-nowrap">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab content */}
+                <div className="p-3.5 sm:p-6 lg:p-10 flex-grow bg-white flex flex-col min-h-[170px] sm:min-h-[260px] lg:min-h-[350px]">
+                  {activeTab === "academics" && (
+                    <ul className="space-y-2.5 sm:space-y-4">
+                      {m.academics.map((a, idx) => (
+                        <li key={idx} className="text-xs sm:text-sm lg:text-base text-[#122554] border-l-3 sm:border-l-4 border-[#122554] pl-2.5 sm:pl-4 font-medium leading-relaxed">
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {activeTab === "leadership" && (
+                    <ul className="space-y-3 sm:space-y-4">
+                      {m.leadership.map((l, idx) => (
+                        <li key={idx} className="text-xs sm:text-sm lg:text-base text-[#122554] border-l-3 sm:border-l-4 border-[#122554] pl-3 sm:pl-4 font-medium leading-relaxed">
+                          {l}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {activeTab === "admits" && (
+                    <ul className="space-y-3 sm:space-y-4">
+                      {m.admits.map((a, idx) => (
+                        <li key={idx} className="text-xs sm:text-sm lg:text-base text-[#122554] border-l-3 sm:border-l-4 border-[#122554] pl-3 sm:pl-4 font-medium leading-relaxed">
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="mt-8 grid gap-10 lg:grid-cols-3">
-              <section>
-                <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4 text-accent-foreground" />
-                  <h3 className="eyebrow">Học thuật</h3>
-                </div>
-                <ul className="mt-4 space-y-2.5">
-                  {m.academics.map((a) => (
-                    <li key={a} className="flex gap-3 text-sm leading-relaxed">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                      {a}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+            {/* Carousel Navigation */}
+            <div className="flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border-t-2 border-[#122554] bg-[#ffffff]">
+              <button
+                onClick={prev}
+                className="flex items-center gap-2 text-[#122554] hover:bg-[#122554] hover:text-white p-2 border-2 border-[#122554] transition-all cursor-pointer"
+                title="Mentor trước"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
 
-              <section>
-                <div className="flex items-center gap-2">
-                  <Briefcase className="h-4 w-4 text-accent-foreground" />
-                  <h3 className="eyebrow">Kinh nghiệm dẫn dắt</h3>
-                </div>
-                <ul className="mt-4 space-y-3">
-                  {m.leadership.map((l) => (
-                    <li key={l} className="text-sm leading-relaxed text-muted-foreground">
-                      {l}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <div className="flex gap-3 items-center">
+                {mentorsList.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goTo(idx)}
+                    className={`h-3.5 w-3.5 border-2 border-[#122554] transition-all cursor-pointer ${currentSlide === idx ? "bg-[#122554] scale-110" : "bg-white hover:bg-slate-200"}`}
+                    aria-label={`Mentor ${idx + 1}`}
+                  />
+                ))}
+              </div>
 
-              <section>
-                <div className="flex items-center gap-2">
-                  <School className="h-4 w-4 text-accent-foreground" />
-                  <h3 className="eyebrow">Trúng tuyển & học bổng</h3>
-                </div>
-                <ul className="mt-4 space-y-2.5">
-                  {m.admits.map((a) => (
-                    <li key={a} className="text-sm leading-relaxed">
-                      {a}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <button
+                onClick={next}
+                className="flex items-center gap-2 text-[#122554] hover:bg-[#122554] hover:text-white p-2 border-2 border-[#122554] transition-all cursor-pointer"
+                title="Mentor tiếp theo"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
             </div>
-          </article>
-        ))}
-      </div>
+          </div>
+        </div>
+      </section>
 
-      <section className="bg-accent text-accent-foreground">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-14 lg:flex-row lg:items-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">
-            Ghép mentor phù hợp với ngành học của em
-          </h2>
+      <section className="text-[#122554] border-t-2 border-[#122554] relative overflow-hidden bg-white">
+        {/* Background Art */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none flex items-center justify-center">
+          <img src="/icons-effect-art/background 3.PNG" alt="" className="w-full h-full object-cover object-center" />
+        </div>
+        {/* Decorative Star */}
+        <img src="/icons-effect-art/star small blue.svg" alt="" className="absolute top-4 right-4 md:top-8 md:right-8 w-5 h-5 md:w-8 md:h-8 animate-rock pointer-events-none z-10" />
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-6 px-5 py-16 lg:flex-row lg:items-center relative z-10 text-center lg:text-left">
+          <div className="lg:pr-10">
+            <h2 className="text-3xl font-bold sm:text-4xl text-[#122554]">
+              Ghép mentor phù hợp với ngành học của em
+            </h2>
+          </div>
           <Link
             to="/lien-he"
-            className="inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-medium text-primary-foreground"
+            className="btn-interactive btn-interactive-primary px-8 py-4 text-base w-full lg:w-auto"
           >
-            Đặt lịch tư vấn
-            <ArrowRight className="h-4 w-4" />
+            Đăng ký tư vấn
+            <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       </section>

@@ -11,10 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChuongTrinhRouteImport } from './routes/chuong-trinh'
+import { Route as GiaSuRouteImport } from './routes/gia-su'
 import { Route as KetQuaRouteImport } from './routes/ket-qua'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as MentorsRouteImport } from './routes/mentors'
+import { Route as ThuVienRouteImport } from './routes/thu-vien'
 import { Route as VeChungToiRouteImport } from './routes/ve-chung-toi'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const ChuongTrinhRoute = ChuongTrinhRouteImport.update({
   id: '/chuong-trinh',
   path: '/chuong-trinh',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiaSuRoute = GiaSuRouteImport.update({
+  id: '/gia-su',
+  path: '/gia-su',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KetQuaRoute = KetQuaRouteImport.update({
@@ -41,71 +50,114 @@ const MentorsRoute = MentorsRouteImport.update({
   path: '/mentors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ThuVienRoute = ThuVienRouteImport.update({
+  id: '/thu-vien',
+  path: '/thu-vien',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VeChungToiRoute = VeChungToiRouteImport.update({
   id: '/ve-chung-toi',
   path: '/ve-chung-toi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/gia-su': typeof GiaSuRoute
   '/ket-qua': typeof KetQuaRoute
   '/lien-he': typeof LienHeRoute
   '/mentors': typeof MentorsRoute
+  '/thu-vien': typeof ThuVienRoute
   '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/gia-su': typeof GiaSuRoute
   '/ket-qua': typeof KetQuaRoute
   '/lien-he': typeof LienHeRoute
   '/mentors': typeof MentorsRoute
+  '/thu-vien': typeof ThuVienRoute
   '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chuong-trinh': typeof ChuongTrinhRoute
+  '/gia-su': typeof GiaSuRoute
   '/ket-qua': typeof KetQuaRoute
   '/lien-he': typeof LienHeRoute
   '/mentors': typeof MentorsRoute
+  '/thu-vien': typeof ThuVienRoute
   '/ve-chung-toi': typeof VeChungToiRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/chuong-trinh'
+    | '/gia-su'
     | '/ket-qua'
     | '/lien-he'
     | '/mentors'
+    | '/thu-vien'
     | '/ve-chung-toi'
+    | '/admin/login'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/chuong-trinh'
+    | '/gia-su'
     | '/ket-qua'
     | '/lien-he'
     | '/mentors'
+    | '/thu-vien'
     | '/ve-chung-toi'
+    | '/admin/login'
+    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/chuong-trinh'
+    | '/gia-su'
     | '/ket-qua'
     | '/lien-he'
     | '/mentors'
+    | '/thu-vien'
     | '/ve-chung-toi'
+    | '/admin/login'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChuongTrinhRoute: typeof ChuongTrinhRoute
+  GiaSuRoute: typeof GiaSuRoute
   KetQuaRoute: typeof KetQuaRoute
   LienHeRoute: typeof LienHeRoute
   MentorsRoute: typeof MentorsRoute
+  ThuVienRoute: typeof ThuVienRoute
   VeChungToiRoute: typeof VeChungToiRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/chuong-trinh'
       fullPath: '/chuong-trinh'
       preLoaderRoute: typeof ChuongTrinhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gia-su': {
+      id: '/gia-su'
+      path: '/gia-su'
+      fullPath: '/gia-su'
+      preLoaderRoute: typeof GiaSuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ket-qua': {
@@ -145,11 +204,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/thu-vien': {
+      id: '/thu-vien'
+      path: '/thu-vien'
+      fullPath: '/thu-vien'
+      preLoaderRoute: typeof ThuVienRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ve-chung-toi': {
       id: '/ve-chung-toi'
       path: '/ve-chung-toi'
       fullPath: '/ve-chung-toi'
       preLoaderRoute: typeof VeChungToiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -158,10 +238,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChuongTrinhRoute: ChuongTrinhRoute,
+  GiaSuRoute: GiaSuRoute,
   KetQuaRoute: KetQuaRoute,
   LienHeRoute: LienHeRoute,
   MentorsRoute: MentorsRoute,
+  ThuVienRoute: ThuVienRoute,
   VeChungToiRoute: VeChungToiRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
