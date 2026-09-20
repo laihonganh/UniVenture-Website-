@@ -78,7 +78,7 @@ function AboutPage() {
             UniVenture là một hệ sinh thái giáo dục hướng tới việc đồng hành cùng học sinh trên hành
             trình bước vào đại học quốc tế bằng <span className="highlight-yellow">trải nghiệm thực tiễn</span>. Chúng tôi tin rằng một bộ hồ
             sơ mạnh không được tạo nên bởi những thành tích được "xây dựng", được "tô vẽ", mà bởi
-            những trải nghiệm được <span className="text-[#ffcd6b]">sống thật</span>.
+            những trải nghiệm được <span className="font-bold text-[#ffcd6b] underline decoration-[#ffcd6b]/60 decoration-2">sống thật</span>.
           </p>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, FileText } from "lucide-react";
 
 export function SiteFooter() {
   return (
@@ -106,13 +106,21 @@ export function SiteFooter() {
                 <MapPin className="h-4 w-4 text-[#ffcd6b] shrink-0 mt-0.5" />
                 <span className="text-white/90">S2.07 Vinhomes Ocean Park, huyện Gia Lâm, TP.Hà Nội</span>
               </li>
-              <li className="pt-1">
+              <li className="pt-1 flex flex-col gap-2">
                 <Link
                   to="/lien-he"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold bg-[#ffcd6b] text-[#122554] px-4 py-2 hover:bg-white transition-colors"
+                  className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-bold bg-[#ffcd6b] text-[#122554] px-4 py-2 hover:bg-white transition-colors"
                 >
                   Đặt lịch tư vấn <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
+                <a
+                  href="/UniVenture-Booklet-2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-bold border border-[#ffcd6b] text-[#ffcd6b] px-4 py-2 hover:bg-[#ffcd6b] hover:text-[#122554] transition-colors"
+                >
+                  <FileText className="h-3.5 w-3.5" /> Booklet 2026 (PDF)
+                </a>
               </li>
             </ul>
           </div>

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Minus } from "lucide-react";
+import { ArrowRight, Check, Minus, Rocket, Trophy, Heart, Search } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/chuong-trinh")({
@@ -74,23 +74,35 @@ const programs = [
     desc: "Đồng hành theo năm để học sinh xây dự án xã hội, khởi tạo startup, tham gia nghiên cứu và các kỳ thi quốc tế.",
     options: [
       {
-        name: "Builder Track",
-        note: "Xây dựng dự án xã hội hoặc sáng kiến cộng đồng: từ ý tưởng, khảo sát, triển khai đến đo lường tác động.",
+        name: "Ươm Tạo Khởi Nghiệp",
+        note: "Biến ý tưởng thành sản phẩm (MVP)",
         items: [
-          "Định vị hồ sơ & chọn hướng dự án",
-          "Cố vấn triển khai theo sprint hàng tháng",
-          "Kết nối đối tác, cộng đồng và cố vấn chuyên môn",
-          "Hồ sơ hoá thành tựu cho bộ apply",
+          "Phát triển ứng dụng, mô hình hoặc sản phẩm giáo dục/công nghệ.",
+          "Trình bày dự án tại các vườn ươm (VentureX, HCMC Innovation Center...)",
         ],
       },
       {
-        name: "Startup & Research Track",
-        note: "Khởi tạo startup hoặc thực hiện nghiên cứu cùng giáo sư, chuyên gia; chuẩn bị cho các kỳ thi và cuộc thi quốc tế.",
+        name: "Cuộc Thi Quốc Tế",
+        note: "Tư duy Case Study & Business Pitching",
         items: [
-          "Mentor 1-1 cùng founder / nhà nghiên cứu",
-          "Xây dựng sản phẩm, mô hình kinh doanh hoặc đề tài",
-          "Luyện tập pitching & báo cáo học thuật",
-          "Đồng hành các cuộc thi khởi nghiệp, olympiad quốc tế",
+          "Đào tạo kỹ năng phân tích và giải quyết vấn đề",
+          "Chinh phục các giải thưởng sáng tạo và kinh doanh toàn cầu (Diamond Challenge, Blue Ocean, WICO...)",
+        ],
+      },
+      {
+        name: "Tác Động Xã Hội",
+        note: "Lan tỏa giá trị qua năng lực lãnh đạo",
+        items: [
+          "Thành lập, điều hành dự án cộng đồng phi lợi nhuận",
+          "Tổ chức sự kiện gây quỹ, hoặc tham gia Ban tổ chức các mô hình hội nghị lớn",
+        ],
+      },
+      {
+        name: "Nghiên Cứu Học Thuật",
+        note: "Đào sâu chuyên môn cùng Mentor",
+        items: [
+          "Thực hiện dự án nghiên cứu khoa học chuyên sâu, thiết kế vi mạch hoặc ứng dụng AI",
+          "Hướng tới xuất bản bài báo khoa học hoặc tham gia hội thảo",
         ],
       },
     ],

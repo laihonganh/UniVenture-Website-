@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Compass, Rocket, Microscope, Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Compass, Rocket, Microscope, Users, ChevronLeft, ChevronRight, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -61,7 +61,7 @@ const mentorTeaser = [
   {
     name: "Mentor Bảo Linh",
     image: "/images/mentors/mentor-bao-linh-new.png",
-    highlight: "Học bổng 100% Cử nhân Y khoa (MD) tại VinUniversity. Đồng sáng lập startup MedMate.",
+    highlight: "Học bổng toàn phần Cử nhân Y khoa (MD) tại VinUniversity. Đồng sáng lập startup MedMate.",
   },
   {
     name: "Mentor Bảo Minh",
@@ -168,9 +168,10 @@ function Index() {
 
       {/* Stats */}
       <section className="border-b-2 border-[#122554] relative overflow-hidden" style={{ background: "#ffffff" }}>
-        {/* Decorative Blue Star */}
-        <img src="/icons-effect-art/star small blue.svg" alt="" className="absolute top-4 right-4 md:top-8 md:right-8 w-5 h-5 md:w-8 md:h-8 animate-rock pointer-events-none" />
-        <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-5 py-12 lg:grid-cols-4">
+        {/* Decorative Blue Diamond - Top Right & Bottom Left (scaled 5x) */}
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -top-6 -right-6 md:-top-10 md:-right-10 w-24 h-24 md:w-40 md:h-40 animate-rock pointer-events-none opacity-90" />
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 w-20 h-20 md:w-32 md:h-32 animate-rock pointer-events-none opacity-70" />
+        <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-5 py-12 lg:grid-cols-4 relative z-10">
           {stats.map((s) => (
             <div key={s.label} className="border-l-4 border-[#ffcd6b] pl-5">
               <dt className="font-display text-4xl font-bold text-[#122554] sm:text-5xl">{s.value}</dt>
@@ -221,9 +222,9 @@ function Index() {
 
       {/* Core Pillars */}
       <section className="bg-[#122554] text-white border-b-2 border-[#122554] relative overflow-hidden">
-        {/* Decorative Yellow Stars */}
-        <img src="/icons-effect-art/star small yellow.png" alt="" className="absolute top-6 right-6 md:top-12 md:right-12 w-6 h-6 md:w-10 md:h-10 animate-rock pointer-events-none" />
-        <img src="/icons-effect-art/star small while.png" alt="" className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-4 h-4 md:w-6 md:h-6 animate-rock pointer-events-none" />
+        {/* Decorative Yellow Stars & Sparkle */}
+        <img src="/icons-effect-art/star-big-yellow.png" alt="" className="absolute top-6 right-6 md:top-10 md:right-10 w-8 h-8 md:w-14 md:h-14 animate-rock pointer-events-none opacity-90" />
+        <img src="/icons-effect-art/Sparkle.svg" alt="" className="absolute bottom-6 left-8 md:bottom-12 md:left-20 w-5 h-5 md:w-8 md:h-8 animate-pulse pointer-events-none opacity-80" />
 
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:py-24 relative z-10">
           <div>
@@ -254,12 +255,21 @@ function Index() {
       </section>
 
       {/* Mentors teaser */}
-      <section className="bg-white">
+      <section className="bg-white relative overflow-hidden">
+        {/* Decorative Blue Diamond - Top Right & Bottom Left (scaled 5x) */}
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -top-6 -right-6 md:-top-10 md:-right-10 w-24 h-24 md:w-40 md:h-40 animate-rock pointer-events-none opacity-90 z-10" />
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 w-20 h-20 md:w-36 md:h-36 animate-rock pointer-events-none opacity-80 z-10" />
         <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-10">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#122554]">
-              Người đi trước đã làm được điều em đang hướng tới
-            </h2>
+            <div>
+              <p className="eyebrow text-[#122554]">Đội ngũ mentor tiêu biểu</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#122554] mt-1">
+                Người đi trước đã làm được điều em đang hướng tới
+              </h2>
+              <p className="text-sm text-gray-600 mt-2 max-w-xl">
+                Dưới đây là một số gương mặt mentor tiêu biểu. Mạng lưới cố vấn của UniVenture còn rất nhiều anh chị tài năng ở đa dạng ngành nghề sẵn sàng dẫn dắt em trong các chặng đường kế tiếp.
+              </p>
+            </div>
             <Link
               to="/mentors"
               className="btn-interactive btn-interactive-primary px-6 py-3 text-base shrink-0 hidden md:inline-flex"
@@ -306,13 +316,13 @@ function Index() {
               )}
 
               <div className="flex justify-between items-center w-full mt-2 border-t border-[#122554] pt-2">
-                <button onClick={prevMentor} className="p-1.5 border-2 border-[#122554] bg-white text-[#122554] cursor-pointer hover:bg-[#ffcd6b] transition-colors"><ChevronLeft className="h-4 w-4" /></button>
+                <button onClick={prevMentor} className="p-1.5 border-2 border-[#122554] bg-white text-[#122554] cursor-pointer hover:bg-[#ffcd6b] hover:text-[#122554] transition-colors"><ChevronLeft className="h-4 w-4" /></button>
                 <div className="flex gap-1.5">
                   {mentorTeaser.map((_, i) => (
                     <div key={i} className={`h-2 w-2 rounded-full ${i === currentMentorSlide ? 'bg-[#122554]' : 'border border-[#122554]'}`} />
                   ))}
                 </div>
-                <button onClick={nextMentor} className="p-1.5 border-2 border-[#122554] bg-white text-[#122554] cursor-pointer hover:bg-[#ffcd6b] transition-colors"><ChevronRight className="h-4 w-4" /></button>
+                <button onClick={nextMentor} className="p-1.5 border-2 border-[#122554] bg-white text-[#122554] cursor-pointer hover:bg-[#ffcd6b] hover:text-[#122554] transition-colors"><ChevronRight className="h-4 w-4" /></button>
               </div>
             </div>
           </div>
@@ -371,13 +381,24 @@ function Index() {
               Một buổi tư vấn 1-1 để hiểu điểm mạnh, định hướng và lộ trình phù hợp nhất.
             </p>
           </div>
-          <Link
-            to="/lien-he"
-            className="btn-interactive btn-interactive-primary px-8 py-4 text-base w-full lg:w-auto"
-          >
-            Đăng ký tư vấn
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+            <Link
+              to="/lien-he"
+              className="btn-interactive btn-interactive-primary px-7 py-3.5 text-base whitespace-nowrap"
+            >
+              Đăng ký tư vấn
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <a
+              href="/UniVenture-Booklet-2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-interactive btn-interactive-accent px-7 py-3.5 text-base font-bold whitespace-nowrap"
+            >
+              Tải Booklet 2026
+              <FileText className="h-5 w-5" />
+            </a>
+          </div>
         </div>
       </section>
     </>

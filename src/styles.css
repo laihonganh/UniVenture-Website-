@@ -104,7 +104,7 @@
 
   /* Accent Orange */
   --accent: #ffcd6b;
-  --accent-foreground: #122554;
+  --accent-foreground: #ffffff;
 
   --destructive: #122554;
   --destructive-foreground: #ffffff;
@@ -146,7 +146,7 @@
   --muted: #122554;
   --muted-foreground: #ffffff;
   --accent: #ffcd6b;
-  --accent-foreground: #122554;
+  --accent-foreground: #ffffff;
   --destructive: #ffcd6b;
   --destructive-foreground: #122554;
   --border: #ffffff;
@@ -211,8 +211,10 @@
 
 @utility highlight-yellow {
   background-color: var(--accent);
-  color: var(--primary);
-  padding: 0 0.25rem;
+  color: #122554;
+  font-weight: 700;
+  padding: 0.05rem 0.35rem;
+  border-radius: 2px;
 }
 
 @utility highlight-navy {
@@ -564,7 +566,7 @@ h1, h2 {
   height: 44px;
   border-radius: 0;
   background: #ffcd6b;
-  color: #122554;
+  color: #ffffff;
   border: 2px solid #122554;
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/lien-he")({
   head: () => ({
@@ -70,6 +70,17 @@ function ContactPage() {
                 <li className="flex items-start gap-3">
                   <MapPin className="h-4 w-4 text-[#ffcd6b] shrink-0 mt-0.5" />
                   <span>S2.07 Vinhomes Ocean Park, huyện Gia Lâm, TP.Hà Nội</span>
+                </li>
+                <li className="pt-2">
+                  <a
+                    href="/UniVenture-Booklet-2026.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#ffcd6b] text-[#122554] font-bold text-xs uppercase tracking-wider hover:bg-white transition-colors w-full justify-center"
+                  >
+                    <FileText className="h-4 w-4" />
+                    Tải Booklet UniVenture 2026 (PDF)
+                  </a>
                 </li>
               </ul>
             </div>

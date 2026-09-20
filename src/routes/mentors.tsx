@@ -10,7 +10,7 @@ export const Route = createFileRoute("/mentors")({
       {
         name: "description",
         content:
-          "Mentor Uyển Như (LSE, UCL), Mentor Bảo Linh (học bổng 100% MD VinUni) và Mentor Bảo Minh (quán quân GIC Startup Competition) — những người đi trước đồng hành cùng học sinh.",
+          "Mentor Uyển Như (LSE, UCL), Mentor Bảo Linh (học bổng toàn phần MD VinUni) và Mentor Bảo Minh (quán quân GIC Startup Competition) — những người đi trước đồng hành cùng học sinh.",
       },
       { property: "og:title", content: "Đội ngũ Mentor — UniVenture" },
       {
@@ -46,8 +46,9 @@ function MentorsPage() {
   return (
     <>
       <section className="bg-[#122554] text-white border-b-2 border-[#122554] relative overflow-hidden">
-        {/* Decorative Stars */}
+        {/* Decorative Stars & Sparkles */}
         <img src="/icons-effect-art/star small yellow.png" alt="" className="absolute top-6 right-6 md:top-12 md:right-12 w-6 h-6 md:w-10 md:h-10 animate-rock pointer-events-none z-10" />
+        <img src="/icons-effect-art/Sparkle.svg" alt="" className="absolute top-12 left-8 md:top-20 md:left-24 w-5 h-5 md:w-8 md:h-8 animate-pulse pointer-events-none z-10 opacity-80" />
         <img src="/icons-effect-art/star small while.png" alt="" className="absolute bottom-6 left-6 md:bottom-12 md:left-12 w-4 h-4 md:w-6 md:h-6 animate-rock pointer-events-none z-10" />
         <div className="mx-auto max-w-6xl px-5 py-16 lg:py-24 relative z-10">
           <p className="eyebrow text-[#ffcd6b]">Meet the mentors</p>
@@ -55,7 +56,7 @@ function MentorsPage() {
             Người đã đi con đường em đang bước
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white">
-            Mentor của UniVenture không chỉ có hồ sơ học thuật xuất sắc, họ đã tự tay xây dự án,
+            Dưới đây là một số mentor tiêu biểu tại UniVenture. Các anh chị không chỉ có hồ sơ học thuật xuất sắc, mà đã tự tay xây dự án,
             khởi tạo startup và dẫn dắt tổ chức. Đó là lý do họ hướng dẫn học sinh bằng <span className="highlight-yellow">kinh nghiệm thật</span>.
           </p>
         </div>
@@ -63,9 +64,11 @@ function MentorsPage() {
 
       {/* Mentor Carousel */}
       <section className="bg-white relative overflow-hidden">
-        {/* Decorative Blue Star */}
-        <img src="/icons-effect-art/star small blue.svg" alt="" className="absolute top-6 right-6 md:top-10 md:right-10 w-5 h-5 md:w-8 md:h-8 animate-rock pointer-events-none z-10" />
-        <div className="mx-auto max-w-6xl px-4 sm:px-5 py-8 sm:py-14 lg:py-20">
+        {/* Decorative Blue Diamond - Top Right & Bottom Left (scaled 5x) */}
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -top-4 -right-4 md:-top-8 md:-right-8 w-24 h-24 md:w-40 md:h-40 animate-rock pointer-events-none z-10 opacity-90" />
+        <img src="/icons-effect-art/diamond-blue.png" alt="" className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 w-20 h-20 md:w-36 md:h-36 animate-rock pointer-events-none z-10 opacity-80" />
+        <img src="/icons-effect-art/Sparkle.svg" alt="" className="absolute bottom-10 right-12 md:bottom-16 md:right-24 w-6 h-6 md:w-10 md:h-10 pointer-events-none z-10 opacity-70" />
+        <div className="mx-auto max-w-6xl px-4 sm:px-5 py-8 sm:py-14 lg:py-20 relative z-10">
           <div className="mentor-carousel border-2 border-[#122554] overflow-hidden bg-white shadow-xl">
 
             <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-0">
@@ -95,8 +98,8 @@ function MentorsPage() {
                       key={tab.key}
                       onClick={() => setActiveTab(tab.key)}
                       className={`flex-1 flex flex-col sm:flex-row items-center justify-center p-2.5 sm:p-3.5 lg:p-4 border-r-2 border-[#122554] last:border-r-0 text-xs sm:text-xs lg:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer gap-1 sm:gap-2 ${activeTab === tab.key
-                          ? "bg-[#122554] text-white"
-                          : "bg-white text-[#122554] hover:bg-slate-100"
+                        ? "bg-[#122554] text-white"
+                        : "bg-white text-[#122554] hover:bg-slate-100"
                         }`}
                     >
                       <tab.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
@@ -169,6 +172,22 @@ function MentorsPage() {
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>
+          </div>
+
+          {/* Representative Note */}
+          <div className="mt-8 border-2 border-[#122554] bg-[#f8fafc] p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/icons-effect-art/Sparkle.svg" alt="" className="w-6 h-6 shrink-0 animate-pulse" />
+              <p className="text-xs sm:text-sm text-[#122554] font-medium leading-relaxed">
+                <strong className="font-bold">Lưu ý:</strong> Trên đây là một số gương mặt mentor tiêu biểu của UniVenture. Mạng lưới cố vấn của chúng tôi còn rất nhiều anh chị tài năng ở đa dạng ngành nghề sẵn sàng đồng hành cùng em trong các chặng đường kế tiếp.
+              </p>
+            </div>
+            <Link
+              to="/lien-he"
+              className="btn-interactive btn-interactive-primary px-5 py-2.5 text-xs sm:text-sm shrink-0 whitespace-nowrap"
+            >
+              Ghép mentor phù hợp
+            </Link>
           </div>
         </div>
       </section>

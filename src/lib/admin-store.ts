@@ -8,6 +8,8 @@ export interface TutorItem {
   about: string;
   classes: string[];
   academics: string[];
+  lastModifiedBy?: string;
+  lastModifiedAt?: string;
 }
 
 export interface MentorItem {
@@ -18,6 +20,8 @@ export interface MentorItem {
   academics: string[];
   leadership: string[];
   admits: string[];
+  lastModifiedBy?: string;
+  lastModifiedAt?: string;
 }
 
 export interface ResourcePost {
@@ -27,7 +31,37 @@ export interface ResourcePost {
   desc: string;
   content: string;
   fileUrl?: string;
+  lastModifiedBy?: string;
+  lastModifiedAt?: string;
 }
+
+export interface AdminUser {
+  email: string;
+  addedAt: string;
+  addedBy?: string;
+}
+
+export interface AuditLogItem {
+  id: string;
+  timestamp: string;
+  adminEmail: string;
+  action: string;
+  target: string;
+  details: string;
+}
+
+export interface FilterSubject {
+  id: string;
+  label: string;
+}
+
+export interface FilterCategory {
+  id: string;
+  label: string;
+  subjects: FilterSubject[];
+}
+
+export const UNIFIED_ADMIN_PASSWORD = "univenture123";
 
 export const DEFAULT_TUTORS: TutorItem[] = [
   {
@@ -138,7 +172,7 @@ export const DEFAULT_TUTORS: TutorItem[] = [
   {
     id: 6,
     name: "Lưu Bảo Linh",
-    role: "Học bổng 100% chương trình MD, VinUniversity",
+    role: "Học bổng toàn phần chương trình MD, VinUniversity",
     image: "/images/tutors/tutor-6-luu-bao-linh.png",
     about:
       "Tutor Lưu Bảo Linh với nền tảng Y khoa và Sinh học chuyên sâu, đồng hành cùng học sinh vượt qua các rào cản lý thuyết và bài tập Cambridge, xây dựng phương pháp học có hệ thống và đam mê thực sự với khoa học.",
@@ -148,7 +182,7 @@ export const DEFAULT_TUTORS: TutorItem[] = [
       "IGCSE Coordinated Science",
     ],
     academics: [
-      "Học bổng 100% Cử nhân Y khoa (MD) tại VinUniversity.",
+      "Học bổng toàn phần Cử nhân Y khoa (MD) tại VinUniversity.",
       "Huy chương Bạc International Medical & Biology Competition (IMBC).",
       "Top 15 toàn cầu Inter Medical School Physiology Quiz (IMSPQ).",
     ],
@@ -261,7 +295,7 @@ export const DEFAULT_MENTORS: MentorItem[] = [
     image: "/images/mentors/mentor-bao-linh-new.png",
     role: "Y khoa & Khoa học sức khỏe",
     academics: [
-      "Học bổng 100% Cử nhân Y khoa (MD) tại VinUniversity",
+      "Học bổng toàn phần Cử nhân Y khoa (MD) tại VinUniversity",
       "Huy chương Bạc International Medical & Biology Competition (IMBC)",
       "Top 15 toàn cầu Inter Medical School Physiology Quiz (IMSPQ)",
     ],
@@ -270,7 +304,7 @@ export const DEFAULT_MENTORS: MentorItem[] = [
       "National Medical Academic Competition – NMAC (Founder): tiên phong tổ chức cuộc thi y khoa toàn quốc đầu tiên kết hợp lý thuyết và lâm sàng, thu hút hơn 20 trường đại học.",
       "Student Academic Medical Organization – SAMO (Founder): xây dựng tổ chức hỗ trợ học thuật cho sinh viên Y khoa đầu tiên tại VinUniversity, phục vụ hơn 200 sinh viên.",
     ],
-    admits: ["Học bổng 100% chương trình MD, VinUniversity"],
+    admits: ["Học bổng toàn phần chương trình MD, VinUniversity"],
   },
   {
     id: 3,
@@ -291,11 +325,73 @@ export const DEFAULT_MENTORS: MentorItem[] = [
   },
 ];
 
+// Storage Keys
+const STORAGE_KEY_POSTS = "univenture_library_posts";
+const STORAGE_KEY_TUTORS = "univenture_tutors";
+const STORAGE_KEY_MENTORS = "univenture_mentors";
+const STORAGE_KEY_ADMIN_USERS = "univenture_admin_users";
+const STORAGE_KEY_AUDIT_LOGS = "univenture_audit_logs";
+const STORAGE_KEY_CATEGORIES = "univenture_filter_categories";
+export const SESSION_KEY_AUTH = "univenture_admin_auth";
+export const SESSION_KEY_CURRENT_ADMIN = "univenture_current_admin";
+
+// Default filter categories with structured levels and subjects
+export const DEFAULT_FILTER_CATEGORIES: FilterCategory[] = [
+  {
+    id: "CHECKPOINT",
+    label: "Checkpoint (Lớp 6 - 8)",
+    subjects: [
+      { id: "mathematics", label: "Checkpoint Mathematics" },
+      { id: "science", label: "Checkpoint Science 8" },
+      { id: "khoa học tự nhiên", label: "KHTN Vinschool" },
+    ],
+  },
+  {
+    id: "IGCSE",
+    label: "IGCSE (Lớp 9 - 10)",
+    subjects: [
+      { id: "mathematics", label: "IGCSE Math (0580) G9 & G10" },
+      { id: "science", label: "IGCSE Coordinated Science (0654)" },
+      { id: "chemistry", label: "IGCSE Chemistry (0620)" },
+      { id: "biology", label: "IGCSE Biology (0610)" },
+      { id: "computer", label: "IGCSE Computer Science" },
+    ],
+  },
+  {
+    id: "A LEVEL",
+    label: "AS & A Level (Lớp 11 - 12)",
+    subjects: [
+      { id: "mathematics", label: "AS & A Level Math (9709)" },
+      { id: "physics", label: "AS & A Level Physics (9702)" },
+      { id: "chemistry", label: "AS & A Level Chemistry" },
+      { id: "biology", label: "AS & A Level Biology" },
+    ],
+  },
+];
+
+export const DEFAULT_ADMIN_USERS: AdminUser[] = [
+  {
+    email: "admin@univentureadmissions.com",
+    addedAt: "2026-01-01T00:00:00.000Z",
+    addedBy: "System",
+  },
+  {
+    email: "admin@univenture.vn",
+    addedAt: "2026-01-01T00:00:00.000Z",
+    addedBy: "System",
+  },
+  {
+    email: "tutor@univenture.vn",
+    addedAt: "2026-01-01T00:00:00.000Z",
+    addedBy: "System",
+  },
+];
+
 // Helper functions for localStorage
 export function getStoredTutors(): TutorItem[] {
   if (typeof window === "undefined") return DEFAULT_TUTORS;
   try {
-    const data = localStorage.getItem("univenture_tutors");
+    const data = localStorage.getItem(STORAGE_KEY_TUTORS);
     return data ? JSON.parse(data) : DEFAULT_TUTORS;
   } catch {
     return DEFAULT_TUTORS;
@@ -305,7 +401,7 @@ export function getStoredTutors(): TutorItem[] {
 export function saveStoredTutors(tutors: TutorItem[]) {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem("univenture_tutors", JSON.stringify(tutors));
+    localStorage.setItem(STORAGE_KEY_TUTORS, JSON.stringify(tutors));
   } catch (e) {
     console.error("Error saving tutors:", e);
   }
@@ -314,7 +410,7 @@ export function saveStoredTutors(tutors: TutorItem[]) {
 export function getStoredMentors(): MentorItem[] {
   if (typeof window === "undefined") return DEFAULT_MENTORS;
   try {
-    const data = localStorage.getItem("univenture_mentors");
+    const data = localStorage.getItem(STORAGE_KEY_MENTORS);
     return data ? JSON.parse(data) : DEFAULT_MENTORS;
   } catch {
     return DEFAULT_MENTORS;
@@ -324,7 +420,7 @@ export function getStoredMentors(): MentorItem[] {
 export function saveStoredMentors(mentors: MentorItem[]) {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem("univenture_mentors", JSON.stringify(mentors));
+    localStorage.setItem(STORAGE_KEY_MENTORS, JSON.stringify(mentors));
   } catch (e) {
     console.error("Error saving mentors:", e);
   }
@@ -333,7 +429,7 @@ export function saveStoredMentors(mentors: MentorItem[]) {
 export function getStoredPosts(): ResourcePost[] {
   if (typeof window === "undefined") return DEFAULT_POSTS;
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
+    const data = localStorage.getItem(STORAGE_KEY_POSTS);
     return data ? JSON.parse(data) : DEFAULT_POSTS;
   } catch {
     return DEFAULT_POSTS;
@@ -343,8 +439,240 @@ export function getStoredPosts(): ResourcePost[] {
 export function saveStoredPosts(posts: ResourcePost[]) {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    localStorage.setItem(STORAGE_KEY_POSTS, JSON.stringify(posts));
   } catch (e) {
     console.error("Error saving posts:", e);
   }
+}
+
+// Admin Users Management
+export function getAdminUsers(): AdminUser[] {
+  if (typeof window === "undefined") return DEFAULT_ADMIN_USERS;
+  try {
+    const data = localStorage.getItem(STORAGE_KEY_ADMIN_USERS);
+    if (!data) return DEFAULT_ADMIN_USERS;
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_ADMIN_USERS;
+  } catch {
+    return DEFAULT_ADMIN_USERS;
+  }
+}
+
+export function saveAdminUsers(users: AdminUser[]) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEY_ADMIN_USERS, JSON.stringify(users));
+  } catch (e) {
+    console.error("Error saving admin users:", e);
+  }
+}
+
+export function addAdminUser(email: string, addedBy: string): { success: boolean; message: string } {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized || !normalized.includes("@")) {
+    return { success: false, message: "Email không hợp lệ!" };
+  }
+  const currentUsers = getAdminUsers();
+  if (currentUsers.some((u) => u.email.toLowerCase() === normalized)) {
+    return { success: false, message: "Email này đã có quyền quản trị!" };
+  }
+  const newUser: AdminUser = {
+    email: normalized,
+    addedAt: new Date().toISOString(),
+    addedBy,
+  };
+  const updated = [...currentUsers, newUser];
+  saveAdminUsers(updated);
+  logAdminAction(addedBy, "CẤP QUYỀN", "ADMIN", `Cấp quyền quản trị cho email ${normalized}`);
+  return { success: true, message: `Đã cấp quyền admin cho ${normalized} thành công!` };
+}
+
+export function removeAdminUser(email: string, removedBy: string): { success: boolean; message: string } {
+  const normalized = email.trim().toLowerCase();
+  const currentUsers = getAdminUsers();
+  if (currentUsers.length <= 1) {
+    return { success: false, message: "Không thể xóa admin cuối cùng trong hệ thống!" };
+  }
+  if (normalized === removedBy.trim().toLowerCase()) {
+    return { success: false, message: "Bạn không thể tự xóa tài khoản của chính mình!" };
+  }
+  const updated = currentUsers.filter((u) => u.email.toLowerCase() !== normalized);
+  saveAdminUsers(updated);
+  logAdminAction(removedBy, "THU HỒI", "ADMIN", `Thu hồi quyền quản trị của email ${normalized}`);
+  return { success: true, message: `Đã thu hồi quyền quản trị của ${normalized}!` };
+}
+
+export function getCurrentAdmin(): string {
+  if (typeof window === "undefined") return "admin@univentureadmissions.com";
+  return sessionStorage.getItem(SESSION_KEY_CURRENT_ADMIN) || "admin@univentureadmissions.com";
+}
+
+export function setCurrentAdmin(email: string) {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(SESSION_KEY_AUTH, "true");
+  sessionStorage.setItem(SESSION_KEY_CURRENT_ADMIN, email.trim().toLowerCase());
+}
+
+export function clearCurrentAdmin() {
+  if (typeof window === "undefined") return;
+  sessionStorage.removeItem(SESSION_KEY_AUTH);
+  sessionStorage.removeItem(SESSION_KEY_CURRENT_ADMIN);
+}
+
+export function validateAdminLogin(email: string, pass: string): { success: boolean; message?: string } {
+  const normalizedPass = pass.trim();
+
+  if (!email.trim()) {
+    return { success: false, message: "Vui lòng nhập email quản trị!" };
+  }
+
+  if (normalizedPass !== UNIFIED_ADMIN_PASSWORD) {
+    return { success: false, message: "Mật khẩu không đúng! Vui lòng thử lại." };
+  }
+
+  return { success: true };
+}
+
+// Audit Logs Management
+export function getAuditLogs(): AuditLogItem[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const data = localStorage.getItem(STORAGE_KEY_AUDIT_LOGS);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function logAdminAction(adminEmail: string, action: string, target: string, details: string) {
+  if (typeof window === "undefined") return;
+  try {
+    const current = getAuditLogs();
+    const newLog: AuditLogItem = {
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+      timestamp: new Date().toISOString(),
+      adminEmail: adminEmail || "admin@univentureadmissions.com",
+      action,
+      target,
+      details,
+    };
+    const updated = [newLog, ...current].slice(0, 150);
+    localStorage.setItem(STORAGE_KEY_AUDIT_LOGS, JSON.stringify(updated));
+  } catch (e) {
+    console.error("Error logging admin action:", e);
+  }
+}
+
+// Dynamic Filter Categories & Subjects Management
+export function getStoredFilterCategories(): FilterCategory[] {
+  if (typeof window === "undefined") return DEFAULT_FILTER_CATEGORIES;
+  try {
+    const data = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+    if (!data) return DEFAULT_FILTER_CATEGORIES;
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_FILTER_CATEGORIES;
+  } catch {
+    return DEFAULT_FILTER_CATEGORIES;
+  }
+}
+
+export function saveStoredFilterCategories(cats: FilterCategory[]) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(cats));
+  } catch (e) {
+    console.error("Error saving categories:", e);
+  }
+}
+
+export function registerCategoryAndSubject(
+  categoryLabel: string,
+  subjectLabel: string,
+  adminEmail?: string
+): { categoryId: string; subjectId: string; fullClassTag: string } {
+  const cats = getStoredFilterCategories();
+  const trimmedCat = categoryLabel.trim();
+  const trimmedSubj = subjectLabel.trim();
+
+  let matchedCat = cats.find(
+    (c) =>
+      c.label.toLowerCase() === trimmedCat.toLowerCase() ||
+      c.id.toLowerCase() === trimmedCat.toLowerCase()
+  );
+
+  let updatedCats = [...cats];
+
+  if (!matchedCat) {
+    const newCatId = trimmedCat.toUpperCase().replace(/[^A-Z0-9]/g, "_") || `CAT_${Date.now()}`;
+    matchedCat = {
+      id: newCatId,
+      label: trimmedCat,
+      subjects: [],
+    };
+    updatedCats.push(matchedCat);
+  }
+
+  const existingSubj = matchedCat.subjects.find(
+    (s) => s.label.toLowerCase() === trimmedSubj.toLowerCase()
+  );
+
+  let subjId = existingSubj ? existingSubj.id : "";
+
+  if (!existingSubj) {
+    subjId = trimmedSubj.toLowerCase().replace(/[^a-z0-9]/g, "_") || `subj_${Date.now()}`;
+    const newSubj: FilterSubject = {
+      id: subjId,
+      label: trimmedSubj,
+    };
+    matchedCat.subjects.push(newSubj);
+    updatedCats = updatedCats.map((c) => (c.id === matchedCat!.id ? matchedCat! : c));
+  }
+
+  saveStoredFilterCategories(updatedCats);
+
+  if (adminEmail) {
+    logAdminAction(
+      adminEmail,
+      "THÊM MÔN/CẤP ĐỘ",
+      "CATEGORY",
+      `Thêm môn "${trimmedSubj}" thuộc cấp độ "${matchedCat.label}"`
+    );
+  }
+
+  return {
+    categoryId: matchedCat.id,
+    subjectId: subjId,
+    fullClassTag: `${matchedCat.id} - ${trimmedSubj}`,
+  };
+}
+
+export function removeSubjectFromCategory(
+  categoryId: string,
+  subjectId: string,
+  adminEmail?: string
+): boolean {
+  const cats = getStoredFilterCategories();
+  const updated = cats.map((c) => {
+    if (c.id !== categoryId) return c;
+    return { ...c, subjects: c.subjects.filter((s) => s.id !== subjectId) };
+  });
+  saveStoredFilterCategories(updated);
+  if (adminEmail) {
+    const cat = cats.find((c) => c.id === categoryId);
+    const subj = cat?.subjects.find((s) => s.id === subjectId);
+    logAdminAction(adminEmail, "XÓA MÔN", "CATEGORY", `Xóa môn "${subj?.label}" khỏi cấp độ "${cat?.label}"`);
+  }
+  return true;
+}
+
+export function deleteCategoryById(categoryId: string, adminEmail?: string): boolean {
+  const cats = getStoredFilterCategories();
+  if (cats.length <= 1) return false; // keep at least one category
+  const cat = cats.find((c) => c.id === categoryId);
+  const updated = cats.filter((c) => c.id !== categoryId);
+  saveStoredFilterCategories(updated);
+  if (adminEmail) {
+    logAdminAction(adminEmail, "XÓA CẤP ĐỘ", "CATEGORY", `Xóa cấp độ "${cat?.label}" và toàn bộ ${cat?.subjects.length} môn`);
+  }
+  return true;
 }
