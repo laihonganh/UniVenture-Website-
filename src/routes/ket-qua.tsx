@@ -51,7 +51,6 @@ const regions = [
     note: "Nhiều gói học bổng và hỗ trợ tài chính trị giá từ 5,7 đến 7,2 tỷ VNĐ mỗi suất.",
     schools: [
       { name: "NYU", logo: "/images/logos/nyu.png" },
-      { name: "Babson College", logo: "/images/logos/Babson College.PNG" },
       { name: "Grinnell College", logo: "/images/logos/Grinnell College.png" },
       { name: "Bucknell University", logo: "/images/logos/Bucknell University.PNG" },
       { name: "Kenyon College", logo: "/images/logos/Kenyon College.png" },
